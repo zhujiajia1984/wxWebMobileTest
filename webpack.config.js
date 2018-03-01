@@ -19,6 +19,27 @@ module.exports = {
             use: {
                 loader: 'babel-loader',
             }
+        }, {
+            test: /\.css$/,
+            use: [
+                { loader: "style-loader" },
+                { loader: "css-loader" },
+            ]
+        }, {
+            test: /\.less$/,
+            use: [
+                { loader: "style-loader" },
+                { loader: "css-loader" },
+                {
+                    loader: "less-loader",
+                    options: {
+                        modifyVars: {
+                            '@brand-primary': '#1AAD19',
+                            '@brand-primary-tap': '#179B16',
+                        }
+                    }
+                }
+            ]
         }, ]
     }
 }
