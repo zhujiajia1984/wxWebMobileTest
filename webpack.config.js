@@ -1,15 +1,18 @@
 const path = require('path');
 
 module.exports = {
-    entry: ['./src/index.js'],
+    entry: ['whatwg-fetch', './src/index.js'],
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
     },
     devServer: {
-        contentBase: path.join(__dirname, "dist"),
+        contentBase: [path.join(__dirname, "dist"), path.join(__dirname)],
         port: 18357,
         historyApiFallback: true,
+    },
+    externals: {
+        'wx': 'wx'
     },
     devtool: 'source-map', // source-map
     module: {
