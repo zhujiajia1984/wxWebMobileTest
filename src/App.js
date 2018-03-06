@@ -1,3 +1,5 @@
+// 网址：https://test.weiquaninfo.cn/wxWebMobileTest
+
 import React from 'react';
 import { Button, WhiteSpace, WingBlank } from 'antd-mobile';
 import wx from 'wx';
@@ -33,8 +35,8 @@ export default class App extends React.Component {
 				wx.onMenuShareAppMessage({
 					title: '123', // 分享标题
 					desc: 'abc', // 分享描述
-					link: 'http://test.weiquaninfo.cn/wxWebMobileTest', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-					imgUrl: 'http://test.weiquaninfo.cn/images/baidu.jpg', // 分享图标
+					link: 'https://test.weiquaninfo.cn/wxWebMobileTest', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+					imgUrl: 'https://test.weiquaninfo.cn/images/baidu.jpg', // 分享图标
 					type: 'link', // 分享类型,music、video或link，不填默认为link
 					dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
 					success: function() {
@@ -48,8 +50,8 @@ export default class App extends React.Component {
 				});
 				wx.onMenuShareTimeline({
 					title: 'test', // 分享标题
-					link: 'http://test.weiquaninfo.cn/wxWebMobileTest', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-					imgUrl: 'http://test.weiquaninfo.cn/images/baidu.jpg', // 分享图标
+					link: 'https://test.weiquaninfo.cn/wxWebMobileTest', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+					imgUrl: 'https://test.weiquaninfo.cn/images/baidu.jpg', // 分享图标
 					success: () => {
 						console.log("share success");
 					},
@@ -76,7 +78,7 @@ export default class App extends React.Component {
 	// 获取签名信息（从服务器端）
 	getSignInfo() {
 		return new Promise((resolve, reject) => {
-			let url = "http://test.weiquaninfo.cn/wxWebMobileTest/getConfigSign";
+			let url = "https://test.weiquaninfo.cn/wxWebMobileTest/getConfigSign";
 			fetch(url).then(res => {
 				let contentType = res.headers.get("Content-Type");
 				if (res.status == 200 && contentType && contentType.includes("application/json")) {
