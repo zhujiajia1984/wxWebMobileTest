@@ -1,8 +1,11 @@
 // 网址：https://test.weiquaninfo.cn/wxWebMobileTest
-
+/* eslint-disable */
 import React from 'react';
 import { Button, WhiteSpace, WingBlank } from 'antd-mobile';
 import wx from 'wx';
+// import { firstName, lastName, getFirstName } from './test';
+// import * as test from './test';
+// import getName from './test';
 
 
 //
@@ -10,6 +13,19 @@ export default class App extends React.Component {
 	//
 	constructor(props) {
 		super(props);
+		this.test();
+		// console.log(firstName);
+		// console.log(lastName);
+		// console.log(getFirstName());
+		// console.log(test.firstName);
+		// console.log(test.lastName);
+		// console.log(test.getFirstName());
+		// console.log(getName());
+	}
+
+	//
+	test() {
+
 	}
 
 	// 配置jssdk config
@@ -22,7 +38,7 @@ export default class App extends React.Component {
 		this.setConfig().then(signData => {
 			// console.log(signData);
 			wx.config({
-				debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+				debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
 				appId: 'wxaed97ec85f7517ba', // 必填，公众号的唯一标识
 				timestamp: signData.timestamp, // 必填，生成签名的时间戳
 				nonceStr: signData.noncestr, // 必填，生成签名的随机串
@@ -118,9 +134,9 @@ export default class App extends React.Component {
 					});
 					break;
 				}
-			case 'onMenuShareTimeline':
+			case 'navigateBack':
 				{
-
+					wx.miniProgram.navigateBack();
 					break;
 				}
 			case 'onMenuShareAppMessage':
@@ -147,6 +163,9 @@ export default class App extends React.Component {
 					<WhiteSpace />
 					<WhiteSpace size= 'xl'/>
 						<Button type="primary" onClick={this.onBtnClick.bind(this, 'chooseImage')}>chooseImage</Button>
+					<WhiteSpace />
+					<WhiteSpace size= 'xl'/>
+						<Button type="primary" onClick={this.onBtnClick.bind(this, 'navigateBack')}>backToMiniApp</Button>
 					<WhiteSpace />
 					<WhiteSpace size= 'xl'/>
 						<span>右上角分享到朋友圈</span>

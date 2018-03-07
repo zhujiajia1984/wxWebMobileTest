@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "antd-mobile": "^2.1.6",
+    "babel-polyfill": "^6.26.0",
     "babel-runtime": "^6.26.0",
     "eruda": "^1.4.3",
     "react": "^16.2.0",
