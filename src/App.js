@@ -3,6 +3,7 @@
 import React from 'react';
 import { Button, WhiteSpace, WingBlank } from 'antd-mobile';
 import wx from 'wx';
+import './styles/myStyles.less';
 // import { firstName, lastName, getFirstName } from './test';
 // import * as test from './test';
 // import getName from './test';
@@ -157,6 +158,9 @@ export default class App extends React.Component {
 	render() {
 		return (
 			<div>
+				<div className="test">
+					my-test
+				</div>
 				<WingBlank>
 					<WhiteSpace size= 'xl'/>
 						<Button type="primary" onClick={this.onBtnClick.bind(this, 'checkJsApi')}>checkJsApi</Button>
