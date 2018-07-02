@@ -175,6 +175,11 @@ export default class App extends React.Component {
 					<WhiteSpace size= 'xl'/>
 						<span>右上角分享给朋友</span>
 					<WhiteSpace />
+                    <div>
+                        <img src="https://test.weiquaninfo.cn/hiyou.jpg"
+                            style={{height: 258, width: 258}}
+                        />
+                    </div>
 				</WingBlank>
 			</div>
         );
