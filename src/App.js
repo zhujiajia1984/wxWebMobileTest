@@ -4,9 +4,6 @@ import React from 'react';
 import { Button, WhiteSpace, WingBlank } from 'antd-mobile';
 import wx from 'wx';
 import './styles/myStyles.less';
-// import { firstName, lastName, getFirstName } from './test';
-// import * as test from './test';
-// import getName from './test';
 
 
 //
@@ -14,18 +11,7 @@ export default class App extends React.Component {
     //
     constructor(props) {
         super(props);
-        this.test();
-        // console.log(firstName);
-        // console.log(lastName);
-        // console.log(getFirstName());
-        // console.log(test.firstName);
-        // console.log(test.lastName);
-        // console.log(test.getFirstName());
-        // console.log(getName());
     }
-
-    //
-    test() {}
 
     // 配置jssdk config
     async setConfig() {
@@ -42,47 +28,14 @@ export default class App extends React.Component {
                 timestamp: signData.timestamp, // 必填，生成签名的时间戳
                 nonceStr: signData.noncestr, // 必填，生成签名的随机串
                 signature: signData.signature, // 必填，签名
-                jsApiList: ['chooseImage', 'onMenuShareTimeline', 'onMenuShareAppMessage'] // 必填，需要使用的JS接口列表
+                jsApiList: ['chooseImage'] // 必填，需要使用的JS接口列表
             });
             // jssdk ready / error
             wx.ready(function() {
-                console.log('success');
-                wx.onMenuShareAppMessage({
-                    title: '123', // 分享标题
-                    desc: 'abc', // 分享描述
-                    link: 'https://test.weiquaninfo.cn/wxWebMobileTest', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                    imgUrl: 'https://test.weiquaninfo.cn/images/baidu.jpg', // 分享图标
-                    type: 'link', // 分享类型,music、video或link，不填默认为link
-                    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-                    success: function() {
-                        // 用户确认分享后执行的回调函数
-                        console.log('onMenuShareAppMessage success');
-                    },
-                    cancel: function() {
-                        // 用户取消分享后执行的回调函数
-                        console.log('onMenuShareAppMessage cancel');
-                    }
-                });
-                wx.onMenuShareTimeline({
-                    title: 'test', // 分享标题
-                    link: 'https://test.weiquaninfo.cn/wxWebMobileTest', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                    imgUrl: 'https://test.weiquaninfo.cn/images/baidu.jpg', // 分享图标
-                    success: () => {
-                        console.log("share success");
-                    },
-                    cancel: () => {
-                        console.log("share cancel");
-                    },
-                    fail: (err) => {
-                        console.log("share failed");
-                    },
-                    complete: () => {
-                        console.log("share complete");
-                    }
-                })
+                // console.log('success');
             });
             wx.error(function(res) {
-                console.log(res);
+                // console.log(res);
             });
         }).catch((error) => {
             console.log(error);
@@ -111,7 +64,7 @@ export default class App extends React.Component {
             case 'checkJsApi':
                 {
                     wx.checkJsApi({
-                        jsApiList: ['chooseImage', 'onMenuShareTimeline', 'onMenuShareAppMessage'],
+                        jsApiList: ['chooseImage'],
                         success: (res) => {
                             console.log(res);
                         },
@@ -133,17 +86,6 @@ export default class App extends React.Component {
                     });
                     break;
                 }
-            case 'navigateBack':
-                {
-                    wx.miniProgram.navigateBack();
-                    break;
-                }
-            case 'onMenuShareAppMessage':
-                {
-                    // console.log('onMenuShareAppMessage begin');
-
-                    break;
-                }
             default:
                 {
                     alert("no button type");
@@ -156,9 +98,6 @@ export default class App extends React.Component {
     render() {
         return (
             <div>
-				<div className="name">
-					my-test
-				</div>
 				<WingBlank>
 					<WhiteSpace size= 'xl'/>
 						<Button type="primary" onClick={this.onBtnClick.bind(this, 'checkJsApi')}>checkJsApi</Button>
@@ -166,20 +105,6 @@ export default class App extends React.Component {
 					<WhiteSpace size= 'xl'/>
 						<Button type="primary" onClick={this.onBtnClick.bind(this, 'chooseImage')}>chooseImage</Button>
 					<WhiteSpace />
-					<WhiteSpace size= 'xl'/>
-						<Button type="primary" onClick={this.onBtnClick.bind(this, 'navigateBack')}>backToMiniApp</Button>
-					<WhiteSpace />
-					<WhiteSpace size= 'xl'/>
-						<span>右上角分享到朋友圈</span>
-					<WhiteSpace />
-					<WhiteSpace size= 'xl'/>
-						<span>右上角分享给朋友</span>
-					<WhiteSpace />
-                    <div>
-                        <img src="https://test.weiquaninfo.cn/hiyou.jpg"
-                            style={{height: 258, width: 258}}
-                        />
-                    </div>
 				</WingBlank>
 			</div>
         );
