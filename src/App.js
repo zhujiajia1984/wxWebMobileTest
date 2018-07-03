@@ -11,6 +11,12 @@ export default class App extends React.Component {
     //
     constructor(props) {
         super(props);
+        this.state = {
+            isShowPage: false,
+            isBtnLoading: false,
+            width_bgPic: 0,
+            height_bgPic: 0,
+        }
     }
 
     // 配置jssdk config
@@ -20,6 +26,12 @@ export default class App extends React.Component {
 
     // 配置jssdk
     componentDidMount() {
+        // 获取屏幕宽和高
+        let width_bgPic = document.getElementById('root').clientWidth;
+        let height_bgPic = width_bgPic * 791 / 480;
+        this.setState({ width_bgPic: width_bgPic, height_bgPic: height_bgPic });
+
+        //
         this.setConfig().then(signData => {
             // console.log(signData);
             wx.config({
@@ -28,15 +40,18 @@ export default class App extends React.Component {
                 timestamp: signData.timestamp, // 必填，生成签名的时间戳
                 nonceStr: signData.noncestr, // 必填，生成签名的随机串
                 signature: signData.signature, // 必填，签名
-                jsApiList: ['chooseImage'] // 必填，需要使用的JS接口列表
+                jsApiList: ['chooseImage', 'addCard'] // 必填，需要使用的JS接口列表
             });
             // jssdk ready / error
             wx.ready(function() {
                 // console.log('success');
+
             });
             wx.error(function(res) {
                 // console.log(res);
+                this.setState({ isShowPage: false });
             });
+            this.setState({ isShowPage: true });
         }).catch((error) => {
             console.log(error);
             alert("setConfig failed");
@@ -58,13 +73,51 @@ export default class App extends React.Component {
         })
     }
 
+    // 添加微信卡券
+    addWxCard() {
+        // status
+        this.setState({ isBtnLoading: true });
+        var that = this;
+
+        // get sign
+        let cardId = 'pMBhJ0g_felGMMBBDwrgDhx0FjyQ';
+        let url = `https://test.weiquaninfo.cn/wxWebMobileTest/getCardSign?cardId=${cardId}`;
+        fetch(url).then(res => {
+            let contentType = res.headers.get("Content-Type");
+            if (res.status == 200 && contentType && contentType.includes("application/json")) {
+                return res.json();
+            } else {
+                throw new Error(`status:${res.status} contentType:${contentType}`);
+            }
+        }).then(jsonData => {
+            // console.log(jsonData);
+            // add card
+            wx.addCard({
+                cardList: [{
+                    cardId: jsonData.cardId,
+                    cardExt: jsonData.cardExt
+                }],
+                success: function(res) {
+                    var cardList = res.cardList;
+                },
+                complete: function(res) {
+                    that.setState({ isBtnLoading: false });
+                },
+            });
+
+        }).catch(error => {
+            console.log(error);
+            alert("get card sign failed");
+        })
+    }
+
     // 
     onBtnClick(type, e) {
         switch (type) {
             case 'checkJsApi':
                 {
                     wx.checkJsApi({
-                        jsApiList: ['chooseImage'],
+                        jsApiList: ['chooseImage', 'addCard'],
                         success: (res) => {
                             console.log(res);
                         },
@@ -86,6 +139,9 @@ export default class App extends React.Component {
                     });
                     break;
                 }
+            case 'addCard':
+                this.addWxCard();
+                break;
             default:
                 {
                     alert("no button type");
@@ -98,15 +154,22 @@ export default class App extends React.Component {
     render() {
         return (
             <div>
-				<WingBlank>
-					<WhiteSpace size= 'xl'/>
-						<Button type="primary" onClick={this.onBtnClick.bind(this, 'checkJsApi')}>checkJsApi</Button>
-					<WhiteSpace />
-					<WhiteSpace size= 'xl'/>
-						<Button type="primary" onClick={this.onBtnClick.bind(this, 'chooseImage')}>chooseImage</Button>
-					<WhiteSpace />
-				</WingBlank>
-			</div>
+                {
+                    (this.state.isShowPage)?
+                    <div style={{position: 'relative'}}>
+                        <img src="https://test.weiquaninfo.cn/wxWebMobileTest/bgPic.jpg" 
+                            style={{width: this.state.width_bgPic, height: this.state.height_bgPic}}
+                        />
+                        <div style={{position: 'absolute', top: 400, left: 10, right: 10}} className="btnSubmit">
+                            <Button type="primary"
+                                onClick={this.onBtnClick.bind(this, 'addCard')}
+                                loading={this.state.isBtnLoading}
+                            >
+                            领取优惠券</Button>
+                        </div>
+                    </div>:""
+                }                
+            </div>
         );
     }
 }

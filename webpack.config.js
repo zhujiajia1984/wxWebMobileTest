@@ -14,7 +14,7 @@ module.exports = {
     externals: {
         'wx': 'wx'
     },
-    devtool: 'source-map', // source-map
+    // devtool: 'source-map', // source-map
     module: {
         rules: [{
             test: /\.(js|jsx)$/,
@@ -37,8 +37,9 @@ module.exports = {
                     loader: "less-loader",
                     options: {
                         modifyVars: {
-                            '@brand-primary': '#1AAD19',
-                            '@brand-primary-tap': '#179B16',
+                            // '@brand-primary': '#1AAD19',
+                            '@brand-primary': '#FBCF0B',
+                            '@brand-primary-tap': '#FFE15F',
                         }
                     }
                 }
